@@ -15,10 +15,10 @@ export namespace Resource {
         private price: number
 
         constructor(params: CreateEntityParams & { id: number }) {
-           this.id = params.id
-           this.name = params.name
-           this.uom = params.uom
-           this.price = params.price 
+            this.id = params.id
+            this.name = params.name
+            this.uom = params.uom
+            this.price = params.price
         }
 
         getId(): number {
