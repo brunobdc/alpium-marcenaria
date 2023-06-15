@@ -18,7 +18,7 @@ export namespace ResourceController {
     }).transform(arg => ({ ...arg, price: parseFloat(arg.price) }))
 
     interface CreateResourceResponse {
-        status: number
+        status: 200
         data: {
             id: number
         }
@@ -61,6 +61,32 @@ export namespace ResourceController {
             data: {
                 id: resource.getId()
             }
+        }
+    }
+
+    const SearchByNameSchema = z.object({ name: z.string().min(1) })
+
+    interface SearchByNameResponse {
+        status: 200,
+        data: Array<{ id: number, name: string, uom: string, price: number }>
+    }
+
+    export async function SearchByName(query: z.infer<typeof SearchByNameSchema>): Promise<SearchByNameResponse | ErrorResponse> {
+        const maybeParsed = SearchByNameSchema.safeParse(query)
+        if (!maybeParsed.success) {
+            return {
+                status: 400,
+                data: {
+                    error: maybeParsed.error.message
+                }
+            }
+        }
+
+        const result = await ResourceQueries.searchByName(maybeParsed.data.name)
+
+        return {
+            status: 200,
+            data: result
         }
     }
 }
