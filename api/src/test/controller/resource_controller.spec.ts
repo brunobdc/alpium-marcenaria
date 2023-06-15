@@ -3,6 +3,7 @@ import { ResourceController } from "../../controller/resource_controller";
 import { faker } from "@faker-js/faker";
 import { Resource } from "../../domain/resource";
 import { mockResourceEntity } from "../domain/resource_mock";
+import { ResourceQueries } from "../../db/queries/resource_queries";
 
 describe("ResourceController", () => {
     describe("CreateResource", () => {
@@ -37,7 +38,16 @@ describe("ResourceController", () => {
             expect((result.data as any).error ?? null).not.toBeNull()
         })
 
+        test("should return error if already exists a resource with the same name", async () => {
+            jest.spyOn(ResourceQueries, "existsName").mockResolvedValueOnce(true)
+
+            const result = await ResourceController.CreateResource(mockParams())
+
+            expect(result.status).toEqual(403)
+        })
+
         test("should call Resource.createAndSave once with correct params and return 200 with id number", async () => {
+            jest.spyOn(ResourceQueries, "existsName").mockResolvedValueOnce(false)
             const resource = mockResourceEntity()
             const mockResourceFn = jest.spyOn(Resource, "createAndSave").mockResolvedValueOnce(resource)
             const params = mockParams()

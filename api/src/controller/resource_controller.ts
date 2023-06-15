@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Resource } from "../domain/resource";
+import { ResourceQueries } from "../db/queries/resource_queries";
 
 export namespace ResourceController {
     const CreateResourceSchema = z.object({
@@ -44,6 +45,15 @@ export namespace ResourceController {
         }
 
         const params = maybeParsed.data
+        if (await ResourceQueries.existsName(params.name)) {
+            return {
+                status: 403,
+                data: {
+                    error: "Nome do recurso ja em uso"
+                }
+            }
+        }
+
         const resource = await Resource.createAndSave(params)
 
         return {
