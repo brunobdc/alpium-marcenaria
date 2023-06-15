@@ -8,8 +8,8 @@ describe("ResourceController", () => {
     describe("CreateResource", () => {
         const mockParams = (params?: Partial<ResourceController.CreateResourceRequestDto>): ResourceController.CreateResourceRequestDto => {
             return {
-                name: faker.word.sample(),
-                uom: faker.word.sample({ length: 10 }),
+                name: faker.string.alphanumeric({ length: { min: 5, max: 80 } }),
+                uom: faker.string.alphanumeric({ length: { min: 1, max: 10 } }),
                 price: faker.commerce.price() as any,
                 ...params
             }
