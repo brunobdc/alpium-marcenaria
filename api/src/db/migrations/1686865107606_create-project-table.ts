@@ -8,17 +8,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         "projects",
         {
             id: "SERIAL",
-            name: "VARCHAR(80)",
-            resourceId: "BIGINT",
-            resourceQty: "INT"
+            name: "VARCHAR(100)"
         },
         {
             constraints: {
-                primaryKey: "id",
-                foreignKeys: {
-                    columns: "resourceId",
-                    references: "resources"
-                }
+                primaryKey: "id"
             }
         }
     )
