@@ -3,22 +3,20 @@ services:
   api:
     build: ./api
     volumes:
-      -./api:/app
-      -/app/node_modules/
-      -/app/package-lock.json
-      -/app/build
+      - ./api:/app
+      - /app/node_modules/
+      - /app/build
   web:
     build: ./web
     volumes:
-      -./web:/app
-      -/app/node_modules/
-      -/app/package-lock.json
+      - ./web:/app
+      - /app/node_modules/
   nginx:
     build: .
     ports:
-      -3050:80
+      - 3050:80
   db:
     image: postgres:15
     restart: always
     environment:
-      - POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PASSWORD: SN7mes5uvKbv66wY2p9upToiVMga9MrDoUy4MhtyFK95W7PhVQ
