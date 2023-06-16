@@ -4,14 +4,8 @@ import { Pool } from "pg"
 let pool: Pool | undefined = undefined;
 
 export namespace Database {
-    export function setup() {
+    export async function setup() {
         pool = new Pool({ host: "db", user: "postgres", password: "SN7mes5uvKbv66wY2p9upToiVMga9MrDoUy4MhtyFK95W7PhVQ" })
-    }
-
-    export async function runMigrations() {
-        if (!pool) {
-            throw new Error("Execute setup function first")
-        }
         const client = await pool.connect()
         await migrate({
             dbClient: client,

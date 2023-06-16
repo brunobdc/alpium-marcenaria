@@ -35,4 +35,10 @@ export namespace ResourceQueries {
             price: parseFloat(value.price)
         }))
     }
+
+    export async function exists(id: number): Promise<boolean> {
+        const result = await Database.getPool().query("SELECT 1 FROM resources WHERE id = $1", [id])
+
+        return !!result.rowCount
+    }
 }
