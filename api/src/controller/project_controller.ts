@@ -59,7 +59,7 @@ export namespace ProjectController {
         }
 
         for (const resource of data.resources) {
-            if (await ResourceQueries.exists(resource.id)) {
+            if (!(await ResourceQueries.exists(resource.id))) {
                 return {
                     status: 403,
                     data: {

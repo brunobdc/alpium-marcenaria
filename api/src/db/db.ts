@@ -1,4 +1,5 @@
 import migrate from "node-pg-migrate"
+import path from "path";
 import { Pool } from "pg"
 
 let pool: Pool | undefined = undefined;
@@ -9,7 +10,7 @@ export namespace Database {
         const client = await pool.connect()
         await migrate({
             dbClient: client,
-            dir: "/db/migrations",
+            dir: path.join(__dirname, "migrations"),
             direction: "up",
             migrationsTable: "migrations",
         })

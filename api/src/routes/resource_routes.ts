@@ -4,19 +4,19 @@ import { ResourceQueries } from "../db/queries/resource_queries";
 
 const router = Router()
 
-router.post("/", async function (req, res) {
+router.post("/", async (req, res) => {
     const result = await ResourceController.CreateResource(req.body)
     res.setHeader("ContentType", "application/json")
     res.status(result.status).send(result.data)
 })
 
-router.get("/by-name", async function (req, res) {
+router.get("/by-name", async (req, res) => {
     const result = await ResourceController.SearchByName(req.query as any)
     res.setHeader("ContentType", "application/json")
     res.status(result.status).send(result.data)
 })
 
-router.get("/", async function (req, res) {
+router.get("/", async (req, res) => {
     const result = await ResourceQueries.getAll()
     res.setHeader("ContentType", "application/json")
     res.status(200).send(result)

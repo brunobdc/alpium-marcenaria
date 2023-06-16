@@ -4,13 +4,13 @@ import { ProjectQueries } from "../db/queries/project_queries";
 
 const router = Router()
 
-router.post("/", async function (req, res) {
+router.post("/", async (req, res) => {
     const result = await ProjectController.CreateProject(req.body)
     res.setHeader("ContentType", "application/json")
     res.status(result.status).send(result.data)
 })
 
-router.get("/", async function (req, res) {
+router.get("/", async (req, res) => {
     const result = await ProjectQueries.getAll()
     res.setHeader("ContentType", "application/json")
     res.status(200).send(result)

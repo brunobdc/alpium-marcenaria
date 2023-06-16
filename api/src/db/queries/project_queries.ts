@@ -9,7 +9,7 @@ export namespace ProjectQueries {
             await Database
                 .getPool()
                 .query(
-                    "INSERT INTO project_resources (projectId, resourceId, resourceQty) VALUES ($1, $2, $3)",
+                    'INSERT INTO project_resources ("projectId", "resourceId", "resourceQty") VALUES ($1, $2, $3)',
                     [projectId, resource.id, resource.quantity]
                 )
         }
@@ -28,16 +28,16 @@ export namespace ProjectQueries {
             `--sql
             SELECT  projects.id as id,
                     projects.name as name,
-                    resources.id as resourceId,
-                    resources.name as resourceName,
+                    resources.id as "resourceId",
+                    resources.name as "resourceName",
                     resources.uom as uom,
                     resources.price::numeric as price,
-                    project_resources.quantity as quantity
+                    project_resources."resourceQty" as quantity
             FROM projects
             INNER JOIN project_resources
-                ON project_resources.projectsId = projects.id
+                ON project_resources."projectId" = projects.id
             INNER JOIN resources
-                ON resources.id = project_resources.resourceId
+                ON resources.id = project_resources."resourceId"
             `
         )
 
